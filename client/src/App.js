@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   BrowserRouter as Router,
@@ -19,8 +19,9 @@ import {
 } from "@material-ui/core";
 import PenIcon from "@material-ui/icons/Create";
 import PostsList from "./components/PostsList";
+import PostDetails from "./components/PostDetails";
 import AddPostForm from "./components/AddPostForm";
-import {fetchPost} from "./actions/post";
+import { fetchPost } from "./actions/post";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,8 +51,8 @@ const App = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchPost())
-  },[dispatch])
+    dispatch(fetchPost());
+  }, [dispatch]);
 
   const classes = useStyles();
   return (
@@ -72,7 +73,12 @@ const App = () => {
             >
               <a href="http://localhost:3000/posts">Blog Website</a>
             </Typography>
-            <Button color="primary" variant="outlined" onClick={handleOpen} startIcon={<PenIcon />}>
+            <Button
+              color="primary"
+              variant="outlined"
+              onClick={handleOpen}
+              startIcon={<PenIcon />}
+            >
               Yeni Yazi
             </Button>
           </Toolbar>
@@ -81,7 +87,8 @@ const App = () => {
           <Grid item xs={12}>
             <Router>
               <Switch>
-                <Route path="/posts" component={PostsList} />
+                <Route exact path="/posts" component={PostsList} />
+                <Route exact path="/posts/:id" component={PostDetails} />
               </Switch>
               <Redirect from="/" to="/posts" />
             </Router>
@@ -90,8 +97,6 @@ const App = () => {
       </Container>
 
       <AddPostForm open={open} handleClose={handleClose} />
-
-
     </>
   );
 };
